@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaman Bank - AI Финансовый Ассистент</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-mosque"></i>
+                    <h1>Zaman Bank</h1>
+                    <span class="tagline">AI Финансовый Ассистент</span>
+                </div>
+                <div class="header-controls">
+                    <button id="profileBtn" class="btn btn-profile">
+                        <i class="fas fa-user"></i> Профиль
+                    </button>
+                    <button id="goalsBtn" class="btn btn-goals">
+                        <i class="fas fa-bullseye"></i> Цели
+                    </button>
+                    <button id="analyticsBtn" class="btn btn-analytics">
+                        <i class="fas fa-chart-line"></i> Аналитика
+                    </button>
+                    <button id="clearChat" class="btn btn-secondary">
+                        <i class="fas fa-trash"></i> Очистить
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Боковая панель -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-bullseye"></i> Мои цели</h3>
+                    <div id="goalsList" class="goals-list">
+                        <div class="goal-item">
+                            <div class="goal-icon">🏠</div>
+                            <div class="goal-info">
+                                <div class="goal-name">Квартира</div>
+                                <div class="goal-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 25%"></div>
+                                    </div>
+                                    <span class="progress-text">25%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="addGoalBtn" class="btn btn-primary btn-small">
+                        <i class="fas fa-plus"></i> Добавить цель
+                    </button>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-chart-pie"></i> Расходы</h3>
+                    <div id="expensesChart" class="chart-container">
+                        <canvas id="expensesPieChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-lightbulb"></i> Советы</h3>
+                    <div id="tipsList" class="tips-list">
+                        <div class="tip-item">
+                            <i class="fas fa-coins"></i>
+                            <span>Создайте резервный фонд на 3-6 месяцев</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Основной чат -->
+            <div class="chat-container">
+                <div id="chatMessages" class="chat-messages">
+                    <div class="welcome-message">
+                        <div class="message ai-message">
+                            <div class="message-avatar">
+                                <i class="fas fa-mosque"></i>
+                            </div>
+                            <div class="message-content">
+                                <h3>Ас-саляму алейкум! 👋</h3>
+                                <p>Я ваш AI-ассистент Zaman Bank. Помогу вам с:</p>
+                                <ul>
+                                    <li>🎯 Постановкой и достижением финансовых целей</li>
+                                    <li>📊 Анализом расходов и доходов</li>
+                                    <li>💡 Персонализированными советами</li>
+                                    <li>🏦 Подбором банковских продуктов</li>
+                                    <li>📚 Консультациями по исламским финансам</li>
+                                </ul>
+                                <p>Чем могу помочь?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-container">
+                    <div class="input-wrapper">
+                        <textarea id="messageInput" placeholder="Расскажите о ваших финансовых целях..." rows="1"></textarea>
+                        <div class="input-controls">
+                            <button id="voiceBtn" class="btn btn-voice" title="Голосовой ввод">
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                            <button id="sendBtn" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальные окна -->
+        <!-- Профиль пользователя -->
+        <div id="profileModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-user"></i> Мой профиль</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Ежемесячный доход (тенге)</label>
+                        <input type="number" id="monthlyIncome" placeholder="500000">
+                    </div>
+                    <div class="form-group">
+                        <label>Ежемесячные расходы (тенге)</label>
+                        <input type="number" id="monthlyExpenses" placeholder="300000">
+                    </div>
+                    <div class="form-group">
+                        <label>Толерантность к риску</label>
+                        <select id="riskTolerance">
+                            <option value="conservative">Консервативная</option>
+                            <option value="moderate">Умеренная</option>
+                            <option value="aggressive">Агрессивная</option>
+                        </select>
+                    </div>
+                    <button id="saveProfile" class="btn btn-primary">Сохранить</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Добавление цели -->
+        <div id="goalModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-bullseye"></i> Новая финансовая цель</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Название цели</label>
+                        <input type="text" id="goalName" placeholder="Квартира, автомобиль, образование...">
+                    </div>
+                    <div class="form-group">
+                        <label>Стоимость (тенге)</label>
+                        <input type="number" id="goalCost" placeholder="15000000">
+                    </div>
+                    <div class="form-group">
+                        <label>Срок достижения (месяцев)</label>
+                        <input type="number" id="goalTimeline" placeholder="60">
+                    </div>
+                    <div class="form-group">
+                        <label>Текущие накопления (тенге)</label>
+                        <input type="number" id="currentSavings" placeholder="2000000">
+                    </div>
+                    <button id="saveGoal" class="btn btn-primary">Добавить цель</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Аналитика -->
+        <div id="analyticsModal" class="modal">
+            <div class="modal-content large">
+                <div class="modal-header">
+                    <h3><i class="fas fa-chart-line"></i> Финансовая аналитика</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="analytics-grid">
+                        <div class="analytics-card">
+                            <h4>Доходы vs Расходы</h4>
+                            <canvas id="incomeExpenseChart"></canvas>
+                        </div>
+                        <div class="analytics-card">
+                            <h4>Категории расходов</h4>
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                        <div class="analytics-card">
+                            <h4>Прогресс целей</h4>
+                            <canvas id="goalsProgressChart"></canvas>
+                        </div>
+                        <div class="analytics-card">
+                            <h4>Рекомендации</h4>
+                            <div id="recommendationsList" class="recommendations-list">
+                                <!-- Рекомендации будут добавлены динамически -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Индикатор записи -->
+        <div id="recordingIndicator" class="recording-indicator">
+            <div class="recording-animation">
+                <i class="fas fa-microphone"></i>
+                <span>Запись...</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
