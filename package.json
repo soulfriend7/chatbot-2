@@ -1,0 +1,32 @@
+{
+  "name": "ai-chatbot",
+  "version": "1.0.0",
+  "description": "AI Chatbot with OpenAI API integration",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "start:bank": "node bank-server.js",
+    "dev": "nodemon server.js",
+    "dev:bank": "nodemon bank-server.js"
+  },
+  "dependencies": {
+    "axios": "^1.5.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "socket.io": "^4.7.2",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "ai",
+    "chatbot",
+    "openai",
+    "gpt"
+  ],
+  "author": "",
+  "license": "MIT"
+}
